@@ -51,7 +51,7 @@ const Login = () => {
                 }
             );
 
-            const accessToken = response?.data?.accessToken;
+
 
             if (response?.data?.errors) {
                 if (response?.data?.errors?.username) {
@@ -63,8 +63,8 @@ const Login = () => {
             } else {
 
 console.log('---data----',response?.data );
-
-                const roles = response?.data?.roles;
+                const accessToken = response?.data?.token;
+                const roles = response?.data?.usergroup;
                 setAuth({username, password, roles, accessToken});
                 setUser('');
                 setPwd('');
