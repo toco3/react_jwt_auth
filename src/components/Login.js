@@ -3,7 +3,8 @@ import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import axios from '../api/axios';
-const LOGIN_URL = '/login/logins/auth';
+const LOGIN_URL = '/auth';
+//const USER_URL = '/login/users/current';
 
 const Login = () => {
     const { setAuth } = useAuth();
@@ -49,6 +50,7 @@ const Login = () => {
                     withCredentials: true
                 }
             );
+
             const accessToken = response?.data?.accessToken;
 
             if (response?.data?.errors) {
