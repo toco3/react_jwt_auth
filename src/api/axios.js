@@ -9,6 +9,6 @@ export const axiosPrivate = axios.create({
     headers: { 'Content-Type': 'application/json' },
     withCredentials: false,
     params: {
-        access_token: TOKEN
+        access_token: 'TOKEN'
     }
 });
