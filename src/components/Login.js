@@ -65,6 +65,9 @@ const Login = () => {
 console.log('---data----',response?.data );
                 const accessToken = response?.data?.token;
                 const roles = response?.data?.usergroup;
+
+                console.log('----token----',accessToken);
+                console.log('----roles----', roles);
                 setAuth({username, password, roles, accessToken});
                 setUser('');
                 setPwd('');
