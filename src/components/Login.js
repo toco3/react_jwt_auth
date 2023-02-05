@@ -3,7 +3,7 @@ import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import axios from '../api/axios';
-const LOGIN_URL = '/login/logins/auth-toco3';
+const LOGIN_URL = '/login/logins/auth';
 
 const Login = () => {
     const { setAuth } = useAuth();
