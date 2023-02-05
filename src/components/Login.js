@@ -3,7 +3,7 @@ import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import axios from '../api/axios';
-const LOGIN_URL = '/auth';
+const LOGIN_URL = '/login/logins/auth';
 
 const Login = () => {
     const { setAuth } = useAuth();
@@ -14,10 +14,14 @@ const Login = () => {
 
     const userRef = useRef();
     const errRef = useRef();
+    const userErrRef = useRef();
+    const passwordErrRef = useRef();
 
-    const [user, setUser] = useState('');
-    const [pwd, setPwd] = useState('');
+    const [username, setUser] = useState('');
+    const [password, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
+    const [userErrMsg, setUserErrMsg] = useState('');
+    const [passwordErrMsg, setPasswordErrMsg] = useState('');
 
     useEffect(() => {
         userRef.current.focus();
@@ -25,27 +29,51 @@ const Login = () => {
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd])
+    }, [username, password])
+
+    useEffect(() => {
+        setUserErrMsg('');
+    }, [username])
+
+    useEffect(() => {
+        setPasswordErrMsg('');
+    }, [password])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
             const response = await axios.post(LOGIN_URL,
-                JSON.stringify({ user, pwd }),
+                JSON.stringify({ username, password }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
                 }
             );
-            console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response));
             const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({ user, pwd, roles, accessToken });
-            setUser('');
-            setPwd('');
-            navigate(from, { replace: true });
+
+            if (response?.data?.errors) {
+                if (response?.data?.errors?.username) {
+                    setUserErrMsg(response?.data?.errors?.username);
+                }
+                if (response?.data?.errors?.password) {
+                    setPasswordErrMsg(response?.data?.errors?.password);
+                }
+            } else {
+
+                const response2 = await axios.get('https://t3-api2dev.vegan-masterclass.de/api/login/users/current',
+                    {
+                        headers: { 'Content-Type': 'application/json' },
+                        withCredentials: true
+                    }
+                );
+                console.log('----current----',response2);
+
+                const roles = response?.data?.roles;
+                setAuth({username, password, roles, accessToken});
+                setUser('');
+                setPwd('');
+                navigate(from, {replace: true});
+            }
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -67,22 +95,24 @@ const Login = () => {
             <h1>Sign In</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username:</label>
+                <span ref={userErrRef} className={userErrMsg ? "usererrmsg" : "offscreen"} aria-live="assertive">{userErrMsg}</span>
                 <input
                     type="text"
                     id="username"
                     ref={userRef}
                     autoComplete="off"
                     onChange={(e) => setUser(e.target.value)}
-                    value={user}
+                    value={username}
                     required
                 />
 
                 <label htmlFor="password">Password:</label>
+                <span ref={passwordErrRef} className={passwordErrMsg ? "usererrmsg" : "offscreen"} aria-live="assertive">{passwordErrMsg}</span>
                 <input
                     type="password"
                     id="password"
                     onChange={(e) => setPwd(e.target.value)}
-                    value={pwd}
+                    value={password}
                     required
                 />
                 <button>Sign In</button>
