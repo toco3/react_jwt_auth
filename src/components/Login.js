@@ -52,28 +52,15 @@ const Login = () => {
             );
 
 
-
-            if (response?.data?.errors) {
-                if (response?.data?.errors?.username) {
-                    setUserErrMsg(response?.data?.errors?.username);
-                }
-                if (response?.data?.errors?.password) {
-                    setPasswordErrMsg(response?.data?.errors?.password);
-                }
-            } else {
-
-console.log('---data----',response?.data );
+            console.log(JSON.stringify(response?.data));
                 const accessToken = response?.data?.token;
                 const roles = response?.data?.usergroup;
 
-                console.log('----token----',accessToken);
-                console.log('----roles----', roles);
                 setAuth({username, password, roles, accessToken});
                 setUser('');
                 setPwd('');
-                console.log('---navigate to:----', from);
                 navigate(from, {replace: true});
-            }
+
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');

@@ -12,13 +12,12 @@ import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 
 const ROLES = {
-  'User': 2001,
-  'Editor': 1984,
+  'User': 3,
+  'Editor': 2,
   'Admin': 1
 }
 
 function App() {
-
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

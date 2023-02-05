@@ -1,14 +1,23 @@
 import { Link } from "react-router-dom"
+import useAuth from "../hooks/useAuth";
 
 const Lounge = () => {
+    const { auth } = useAuth();
+
     return (
         <section>
-            <h1>The Lounge</h1>
+            <h1>About the User</h1>
             <br />
-            <p>Admins and Editors can hang out here.</p>
+            <p>{auth.username} </p>
+            <p>{auth?.roles?.map(role => {
+                return (
+                   <span> { role }, </span>
+                );
+            })} </p>
             <div className="flexGrow">
                 <Link to="/">Home</Link>
             </div>
+
         </section>
     )
 }
