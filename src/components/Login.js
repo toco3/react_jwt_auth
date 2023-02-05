@@ -62,13 +62,7 @@ const Login = () => {
                 }
             } else {
 
-                const response2 = await axios.get('https://t3-api2dev.vegan-masterclass.de/api/login/users/current',
-                    {
-                        headers: { 'Content-Type': 'application/json' },
-                        withCredentials: true
-                    }
-                );
-                console.log('----current----',response2);
+console.log('---data----',response?.data );
 
                 const roles = response?.data?.roles;
                 setAuth({username, password, roles, accessToken});
