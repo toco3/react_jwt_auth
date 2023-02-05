@@ -71,6 +71,7 @@ console.log('---data----',response?.data );
                 setAuth({username, password, roles, accessToken});
                 setUser('');
                 setPwd('');
+                console.log('---navigate to:----', from);
                 navigate(from, {replace: true});
             }
         } catch (err) {
