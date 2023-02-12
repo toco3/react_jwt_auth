@@ -9,6 +9,7 @@ const Lounge = () => {
             <h1>About the User</h1>
             <br />
             <p>{auth.username} </p>
+            <p>{auth.firstname} {auth.lastname}</p>
             <p>{auth?.roles?.map(role => {
                 return (
                    <span> { role }, </span>

@@ -52,11 +52,13 @@ const Login = () => {
             );
 
 
-            console.log(JSON.stringify(response?.data));
+           // console.log(JSON.stringify(response?.data));
                 const accessToken = response?.data?.token;
                 const roles = response?.data?.usergroup;
+                const firstname = response?.data?.first_name;
+                const lastname = response?.data?.last_name;
 
-                setAuth({username, password, roles, accessToken});
+                setAuth({username, password, roles, accessToken, firstname, lastname});
                 setUser('');
                 setPwd('');
                 navigate(from, {replace: true});
