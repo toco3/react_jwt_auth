@@ -9,11 +9,13 @@ import Unauthorized from './components/Unauthorized';
 import Lounge from './components/Lounge';
 import LinkPage from './components/LinkPage';
 import RequireAuth from './components/RequireAuth';
+import MyCourses from './components/MyCourses';
+import AllCourses from './components/AllCourses';
 import { Routes, Route } from 'react-router-dom';
 
 const ROLES = {
-  'User': 3,
-  'Editor': 2,
+  'User': 1,
+  'Editor': 1,
   'Admin': 1
 }
 
@@ -43,6 +45,14 @@ function App() {
 
         <Route element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}>
           <Route path="lounge" element={<Lounge />} />
+        </Route>
+
+        <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+          <Route path="myCourses" element={<MyCourses />} />
+        </Route>
+
+        <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+          <Route path="allCourses" element={<AllCourses />} />
         </Route>
 
         {/* catch all */}
